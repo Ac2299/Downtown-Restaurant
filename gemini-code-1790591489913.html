@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downtown Restaurant | مطعم داون تاون</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --primary: #c5a059;
+            --primary-hover: #b08d46;
+            --border-color: #e5e7eb;
+            --header-overlay: rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; }
+
+        /* Floating Language Switcher */
+        .lang-switcher {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-switcher:hover { background: var(--primary-hover); transform: translateY(-3px); }
+
+        /* Header */
+        header { 
+            background: linear-gradient(var(--header-overlay), var(--header-overlay)), url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover; 
+            padding: 140px 20px; 
+            text-align: center; 
+            color: #fff;
+        }
+        header h1 { font-size: 3.5rem; color: #ffffff; margin-bottom: 12px; font-weight: 900; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        header p { font-size: 1.3rem; color: #f1f5f9; margin-bottom: 30px; font-weight: 500; text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
+        
+        .btn { 
+            display: inline-block; 
+            background-color: var(--primary); 
+            color: #fff; 
+            padding: 14px 35px; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            text-decoration: none; 
+            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.3);
+        }
+        .btn:hover { background-color: var(--primary-hover); transform: translateY(-3px); }
+
+        .container { max-width: 1200px; margin: auto; padding: 60px 20px; }
+        section { margin-bottom: 70px; }
+        
+        section h2 { 
+            text-align: center; 
+            font-size: 2.4rem; 
+            color: var(--text-main); 
+            margin-bottom: 45px; 
+            position: relative;
+            font-weight: 800;
+        }
+        section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .menu-item { 
+            background: var(--card-bg); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .menu-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .menu-item img { width: 100%; height: 210px; object-fit: cover; }
+        .menu-content { padding: 25px; }
+        .menu-content h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--text-main); font-weight: 700; }
+        .menu-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        
+        .price-row { display: flex; justify-content: space-between; align-items: center; }
+        .price { color: var(--primary); font-weight: 800; font-size: 1.25rem; }
+
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .review-card { background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
+        .review-card p { color: var(--text-muted); font-style: italic; margin-bottom: 15px; font-size: 1.05rem; }
+        .review-card span { color: var(--primary); font-weight: 700; font-size: 0.95rem; }
+
+        .order-section { text-align: center; margin-top: 50px; background: var(--card-bg); padding: 50px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 15px 35px rgba(0,0,0,0.04); }
+        .order-section h3 { font-size: 2rem; margin-bottom: 15px; color: var(--text-main); font-weight: 800; }
+        .order-section p { color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem; }
+        
+        footer { text-align: center; padding: 30px; background: #111; color: #888; font-size: 0.95rem; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <!-- زر الترجمة العائم -->
+    <button class="lang-switcher" onclick="toggleLanguage()" id="langBtn">
+        🌐 English
+    </button>
+
+    <header>
+        <h1 data-ar="مطعم داون تاون" data-en="Downtown Restaurant">مطعم داون تاون</h1>
+        <p data-ar="نقدم أشهى الأطباق المجهزة طازجة يومياً لرضائكم" data-en="Serving freshly prepared delicious dishes daily">نقدم أشهى الأطباق المجهزة طازجة يومياً لرضائكم</p>
+        <a href="https://wa.me/201500576313?text=Hello,%20I%20would%20like%20to%20reserve%20a%20table%20or%20order%20from%20Downtown%20menu." class="btn" data-ar="احجز طاولتك أو اطلب الآن" data-en="Reserve a Table or Order Now" target="_blank">احجز طاولتك أو اطلب الآن</a>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. المقبلات والشوربة -->
+        <section>
+            <h2 data-ar="المقبلات والشوربة" data-en="Appetizers & Soups">المقبلات والشوربة</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=600&q=80" alt="Soup">
+                    <div class="menu-content">
+                        <h3 data-ar="شوربة كريمة الدجاج" data-en="Creamy Chicken Soup">شوربة كريمة الدجاج</h3>
+                        <p data-ar="قطع دجاج طرية مع الكريمة الغنية والأعشاب العطرة." data-en="Tender chicken pieces with rich cream and aromatic herbs.">قطع دجاج طرية مع الكريمة الغنية والأعشاب العطرة.</p>
+                        <div class="price-row"><span class="price">90 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Salad">
+                    <div class="menu-content">
+                        <h3 data-ar="سلطة سيزر بالدجاج" data-en="Chicken Caesar Salad">سلطة سيزر بالدجاج</h3>
+                        <p data-ar="خس طازج، قطع الدجاج المشوي، خبز محمص وجبن البارميزان." data-en="Fresh lettuce, grilled chicken slices, croutons, and parmesan cheese.">خس طازج، قطع الدجاج المشوي، خبز محمص وجبن البارميزان.</p>
+                        <div class="price-row"><span class="price">120 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=600&q=80" alt="Spring Rolls">
+                    <div class="menu-content">
+                        <h3 data-ar="سبرينج رول بالخضار" data-en="Vegetable Spring Rolls">سبرينج رول بالخضار</h3>
+                        <p data-ar="رقائق مقرمشة محشية خضار طازجة وتقدم مع صوص الحار الحلو." data-en="Crispy pastry rolls stuffed with fresh vegetables, served with sweet chili.">رقائق مقرمشة محشية خضار طازجة وتقدم مع صوص الحار الحلو.</p>
+                        <div class="price-row"><span class="price">75 EGP</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. الأطباق الرئيسية -->
+        <section>
+            <h2 data-ar="الأطباق الرئيسية" data-en="Main Courses">الأطباق الرئيسية</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Ribeye Steak">
+                    <div class="menu-content">
+                        <h3 data-ar="ستيك ريب آي" data-en="Prime Ribeye Steak">ستيك ريب آي</h3>
+                        <p data-ar="قطع لحم طرية مشوية على الفحم بالطريقة الخاصة مع صوص المشروم." data-en="Tender charcoal-grilled steak served with signature mushroom sauce.">قطع لحم طرية مشوية على الفحم بالطريقة الخاصة مع صوص المشروم.</p>
+                        <div class="price-row"><span class="price">450 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Mixed Grill">
+                    <div class="menu-content">
+                        <h3 data-ar="مشويات مشكلة" data-en="Mixed Grill Platter">مشويات مشكلة</h3>
+                        <p data-ar="تشكيلة من الكباب، الكفتة، وشيش طاووق مع الخبز الطازج." data-en="An assortment of kebab, kofta, and shish tawook with fresh bread.">تشكيلة من الكباب، الكفتة، وشيش طاووق مع الخبز الطازج.</p>
+                        <div class="price-row"><span class="price">380 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=600&q=80" alt="Grilled Salmon">
+                    <div class="menu-content">
+                        <h3 data-ar="سالمون مشوي بالأعشاب" data-en="Herb Grilled Salmon">سالمون مشوي بالأعشاب</h3>
+                        <p data-ar="فيليه سالمون طازج مشوي مع صوص الليمون والزبدة والأعشاب." data-en="Fresh grilled salmon fillet with lemon butter herb sauce.">فيليه سالمون طازج مشوي مع صوص الليمون والزبدة والأعشاب.</p>
+                        <div class="price-row"><span class="price">420 EGP</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. البيتزا والبرجر (الوجبات السريعة) -->
+        <section>
+            <h2 data-ar="البيتزا والبرجر" data-en="Pizza & Burgers">البيتزا والبرجر</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Pizza">
+                    <div class="menu-content">
+                        <h3 data-ar="بيتزا مارجريتا" data-en="Margherita Pizza">بيتزا مارجريتا</h3>
+                        <p data-ar="عجين مخمر طازج، جبنة موتسريلا وأوراق الريحان." data-en="Fresh sourdough crust, mozzarella cheese, and basil leaves.">عجين مخمر طازج، جبنة موتسريلا وأوراق الريحان.</p>
+                        <div class="price-row"><span class="price">220 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80" alt="Pepperoni Pizza">
+                    <div class="menu-content">
+                        <h3 data-ar="بيتزا بيبروني" data-en="Pepperoni Pizza">بيتزا بيبروني</h3>
+                        <p data-ar="شرائح البيبروني المقرمشة مع جبنة الموتسريلا وصوص الطماطم." data-en="Crispy pepperoni slices with mozzarella cheese and tomato sauce.">شرائح البيبروني المقرمشة مع جبنة الموتسريلا وصوص الطماطم.</p>
+                        <div class="price-row"><span class="price">260 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" alt="Burger">
+                    <div class="menu-content">
+                        <h3 data-ar="دبل تشيز برجر" data-en="Double Cheeseburger">دبل تشيز برجر</h3>
+                        <p data-ar="قطعتين لحم بقرى صافي مع جبنة شيدر وصوص داون تاون." data-en="Two pure beef patties with cheddar cheese and Downtown sauce.">قطعتين لحم بقرى صافي مع جبنة شيدر وصوص داون تاون.</p>
+                        <div class="price-row"><span class="price">280 EGP</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. الحلويات -->
+        <section>
+            <h2 data-ar="الحلويات" data-en="Desserts">الحلويات</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80" alt="Cheesecake">
+                    <div class="menu-content">
+                        <h3 data-ar="تشيز كيك الفراولة" data-en="Strawberry Cheesecake">تشيز كيك الفراولة</h3>
+                        <p data-ar="قالب تشيز كيك ناعم مغطى بصوص الفراولة الطازجة." data-en="Smooth cheesecake topped with fresh strawberry compote.">قالب تشيز كيك ناعم مغطى بصوص الفراولة الطازجة.</p>
+                        <div class="price-row"><span class="price">110 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Chocolate Molten Cake">
+                    <div class="menu-content">
+                        <h3 data-ar="مولتن كيك الشوكولاتة" data-en="Chocolate Molten Cake">مولتن كيك الشوكولاتة</h3>
+                        <p data-ar="كيك شوكولاتة دافئ محشو بشوكولاتة ساخنة سائبة مع الآيس كريم." data-en="Warm chocolate cake filled with melting chocolate, served with ice cream.">كيك شوكولاتة دافئ محشو بشوكولاتة ساخنة سائبة مع الآيس كريم.</p>
+                        <div class="price-row"><span class="price">130 EGP</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. المشروبات -->
+        <section>
+            <h2 data-ar="المشروبات" data-en="Beverages">المشروبات</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80" alt="Mojito">
+                    <div class="menu-content">
+                        <h3 data-ar="موهيتو منعش" data-en="Refreshing Mojito">موهيتو منعش</h3>
+                        <p data-ar="مزيج من النعناع، الليمون الصافي ومشروب الصودا." data-en="A blend of fresh mint, lemon juice, and sparkling soda.">مزيج من النعناع، الليمون الصافي ومشروب الصودا.</p>
+                        <div class="price-row"><span class="price">75 EGP</span></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" alt="Coffee">
+                    <div class="menu-content">
+                        <h3 data-ar="قهوة إسبرسو / كابتشينو" data-en="Espresso / Cappuccino">قهوة إسبرسو / كابتشينو</h3>
+                        <p data-ar="بن محمص طازج ومقسّم بعناية لضبط المزاج." data-en="Freshly roasted coffee beans crafted to perfection.">بن محمص طازج ومقسّم بعناية لضبط المزاج.</p>
+                        <div class="price-row"><span class="price">55 EGP</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- آراء العملاء -->
+        <section>
+            <h2 data-ar="آراء العملاء" data-en="Customer Reviews">آراء العملاء</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <p data-ar="&quot;المنيو سهل التصفح وسريع جداً على الموبايل، وتجربة الأكل كانت ممتازة.&quot;" data-en="&quot;The digital menu is very easy to browse and fast on mobile, great food experience.&quot;">"المنيو سهل التصفح وسريع جداً على الموبايل، وتجربة الأكل كانت ممتازة."</p>
+                    <span data-ar="- أحمد محمود" data-en="- Ahmed Mahmoud">- أحمد محمود</span>
+                </div>
+                <div class="review-card">
+                    <p data-ar="&quot;التصميم مريح للعين والأصناف واضحة والطلب عبر الواتساب فكرة عبقرية.&quot;" data-en="&quot;The design is eye-friendly, items are clear, and ordering via WhatsApp is brilliant.&quot;">"التصميم مريح للعين والأصناف واضحة والطلب عبر الواتساب فكرة عبقرية."</p>
+                    <span data-ar="- كريم إبراهيم" data-en="- Karim Ibrahim">- كريم إبراهيم</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="order-section">
+            <h3 data-ar="جاهز لطلب وجبتك الآن؟" data-en="Ready to Order Your Meal Now?">جاهز لطلب وجبتك الآن؟</h3>
+            <p data-ar="تواصل معنا مباشرة عبر الواتساب للحجز أو التوصيل السريع." data-en="Contact us directly via WhatsApp for reservations or fast delivery.">تواصل معنا مباشرة عبر الواتساب للحجز أو التوصيل السريع.</p>
+            <a href="https://wa.me/201500576313?text=Hello,%20I%20would%20like%20to%20order%20from%20Downtown." class="btn" data-ar="تواصل عبر الواتساب (01500576313)" data-en="Contact via WhatsApp (01500576313)" target="_blank">تواصل عبر الواتساب (01500576313)</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p data-ar="جميع الحقوق محفوظة © 2026 - Downtown Restaurant" data-en="All Rights Reserved © 2026 - Downtown Restaurant">جميع الحقوق محفوظة © 2026 - Downtown Restaurant</p>
+    </footer>
+
+    <script>
+        let currentLang = 'ar';
+        function toggleLanguage() {
+            const htmlRoot = document.getElementById('htmlRoot');
+            const langBtn = document.getElementById('langBtn');
+            const elements = document.querySelectorAll('[data-ar]');
+
+            if (currentLang === 'ar') {
+                currentLang = 'en';
+                htmlRoot.setAttribute('lang', 'en');
+                htmlRoot.setAttribute('dir', 'ltr');
+                langBtn.innerHTML = '🌐 العربية';
+                elements.forEach(el => {
+                    if (el.getAttribute('data-en')) {
+                        el.textContent = el.getAttribute('data-en');
+                    }
+                });
+            } else {
+                currentLang = 'ar';
+                htmlRoot.setAttribute('lang', 'ar');
+                htmlRoot.setAttribute('dir', 'rtl');
+                langBtn.innerHTML = '🌐 English';
+                elements.forEach(el => {
+                    if (el.getAttribute('data-ar')) {
+                        el.textContent = el.getAttribute('data-ar');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
