@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOWNTOWN | Gourmet & Grills</title>
+<meta name="description" content="DOWNTOWN — أشهى المشاوي والبرجر الفاخر وأجواء لا تُنسى.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<style>
+    /* الثيمات الفاخرة لداون تاون (عنابي مع ذهبي ملكي) */
+    [data-theme="dark"] {
+      --bg-deep: #140204;
+      --bg-card: rgba(35, 6, 9, 0.9);
+      --accent-gold: #E5C158;
+      --accent-gold-light: #F9E4A8;
+      --accent-emerald: #00E699;
+      --text-main: #FFFFFF;
+      --text-muted: #D8B4B8;
+      --border-glass: rgba(229, 193, 88, 0.25);
+      --nav-bg: rgba(20, 2, 4, 0.85);
+      --paper: #1c0306;
+      --ink: #FFFFFF;
+    }
+
+    [data-theme="light"] {
+      --bg-deep: #F8F5F2;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --accent-gold: #9E7B15;
+      --accent-gold-light: #70550B;
+      --accent-emerald: #00875A;
+      --text-main: #1A1A1A;
+      --text-muted: #666666;
+      --border-glass: rgba(158, 123, 21, 0.2);
+      --nav-bg: rgba(248, 245, 242, 0.9);
+      --paper: #FFFFFF;
+      --ink: #1A1A1A;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Cairo,Arial,sans-serif;background-color:var(--bg-deep);color:var(--text-main);overflow-x:hidden;transition: background 0.4s ease, color 0.4s ease;}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+    .container{width:min(1180px,calc(100% - 40px));margin:auto}
+    .topline{height:4px;background:linear-gradient(90deg,var(--accent-gold),#fff,var(--accent-gold));opacity:.9}
+    
+    .nav{
+     position:fixed;z-index:50;top:18px;left:50%;transform:translateX(-50%);
+     width:min(1100px,calc(100% - 28px));padding:10px 12px 10px 18px;
+     display:flex;align-items:center;justify-content:space-between;gap:18px;
+     background:var(--nav-bg);backdrop-filter:blur(18px);
+     border:1px solid var(--border-glass);border-radius:999px;
+     box-shadow:0 12px 40px rgba(0,0,0,.25);transition:.35s
+    }
+    .nav.scrolled{background:var(--bg-deep);top:10px}
+    .logo{font-family:"Cinzel",serif;font-weight:700;font-size:24px;letter-spacing:2px;white-space:nowrap;color:var(--accent-gold)}
+    .logo span{color:var(--text-main)}
+    .navlinks{display:flex;gap:24px;font-size:13px;color:var(--text-muted)}
+    .navlinks a{transition:.25s}.navlinks a:hover{color:var(--accent-gold)}
+    .actions{display:flex;align-items:center;gap:8px}
+    .pill{
+     border:1px solid var(--border-glass);background:var(--accent-gold);color:#140204;
+     border-radius:999px;padding:11px 20px;cursor:pointer;font-weight:700;font-size:13px;transition:0.3s
+    }
+    .pill:hover{transform:translateY(-2px);background:var(--accent-gold-light)}
+    .menuBtn{display:none;background:transparent;border:0;color:var(--text-main);font-size:23px;cursor:pointer}
+    .mobileMenu{display:none;position:fixed;z-index:49;top:78px;left:14px;right:14px;background:var(--bg-card);backdrop-filter:blur(18px);border:1px solid var(--border-glass);border-radius:22px;padding:15px;box-shadow:0 18px 45px rgba(0,0,0,.3)}
+    .mobileMenu.open{display:block}
+    .mobileMenu a{display:block;padding:12px 15px;border-radius:13px;color:var(--text-main)}
+    .mobileMenu a:hover{background:rgba(229,193,88,0.1);color:var(--accent-gold)}
+
+    /* الأزرار العائمة (ترجمة + ليلي/نهاري) */
+    .floating-controls {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+    .float-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      color: var(--accent-gold);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+    .float-btn:hover {
+      background: var(--accent-gold);
+      color: #140204;
+      transform: scale(1.1);
+    }
+
+    .hero{min-height:100svh;position:relative;display:grid;place-items:center;overflow:hidden}
+    .hero-bg{
+     position:absolute;inset:0;background:
+     linear-gradient(180deg,rgba(20,2,4,.6),rgba(35,6,9,.9)),
+     url("https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1800&q=85") center/cover;
+     transform:scale(1.04);animation:heroZoom 12s ease-in-out infinite alternate
+    }
+    .hero:after{content:"";position:absolute;inset:auto 0 0;height:180px;background:linear-gradient(transparent,var(--bg-deep))}
+    .hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:140px 20px 80px}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border-glass);padding:8px 16px;border-radius:999px;background:rgba(229,193,88,0.08);font-size:12px;letter-spacing:1px;color:var(--accent-gold)}
+    .eyebrow i{width:7px;height:7px;background:var(--accent-gold);border-radius:50%;display:block;box-shadow:0 0 15px var(--accent-gold)}
+    .hero h1{font-size:clamp(45px,9vw,100px);line-height:1.1;letter-spacing:2px;margin:25px 0;font-family:"Cinzel",serif;color:#fff}
+    .hero h1 span{color:var(--accent-gold)}
+    .hero p{font-size:clamp(16px,2vw,20px);color:#E0D0D2;max-width:650px;margin:auto;line-height:1.8}
+    .hero-cta{display:flex;justify-content:center;gap:12px;margin-top:34px;flex-wrap:wrap}
+    .btn{padding:14px 28px;border-radius:999px;border:1px solid var(--border-glass);font-weight:700;cursor:pointer;transition:.3s}
+    .btn.primary{background:var(--accent-gold);color:#140204}
+    .btn.secondary{background:transparent;color:#fff}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+    .scrollhint{margin-top:60px;font-size:11px;color:var(--text-muted);letter-spacing:2px}
+    .scrollhint:after{content:"↓";display:block;font-size:22px;margin-top:6px;animation:bob 1.5s infinite}
+
+    .section{padding:100px 0}
+    .section.light{background:var(--bg-deep);color:var(--text-main)}
+    .section.dark{background:var(--bg-deep)}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:40px}
+    .kicker{color:var(--accent-gold);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+    .section h2{font-size:clamp(30px,4.5vw,55px);line-height:1.1;margin-top:8px;font-family:"Cinzel",serif;color:var(--text-main)}
+    .section-head p{max-width:430px;color:var(--text-muted);line-height:1.8}
+
+    .story{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:center}
+    .story-copy p{margin-top:20px;color:var(--text-muted);line-height:1.9;font-size:15px}
+    .story-copy .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:30px}
+    .stat{padding:15px;border-top:1px solid var(--border-glass)}
+    .stat strong{font:700 32px "Cinzel";display:block;color:var(--accent-gold)}.stat span{font-size:12px;color:var(--text-muted)}
+    .story-img{height:550px;border-radius:28px;overflow:hidden;position:relative;box-shadow:var(--shadow)}
+    .story-img img{width:100%;height:100%;object-fit:cover;transition:1s}.story-img:hover img{transform:scale(1.05)}
+    .story-img .tag{position:absolute;bottom:20px;right:20px;background:rgba(20,2,4,0.9);color:var(--accent-gold);padding:10px 18px;border-radius:999px;font-weight:700;border:1px solid var(--border-glass)}
+
+    .categories{display:flex;gap:15px;overflow:auto;padding:5px 2px 18px;scrollbar-width:none}
+    .categories::-webkit-scrollbar{display:none}
+    .cat{min-width:180px;height:220px;border-radius:22px;overflow:hidden;position:relative;border:1px solid var(--border-glass);cursor:pointer;flex-shrink:0}
+    .cat img{width:100%;height:100%;object-fit:cover;transition:.6s}.cat:hover img{transform:scale(1.08)}
+    .cat:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(14,2,4,.9))}
+    .cat b{position:absolute;z-index:2;bottom:16px;right:16px;font-size:18px;color:#fff}
+
+    .products{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    @media(min-width:768px){.products{grid-template-columns:repeat(4,1fr)}}
+    .card{background:var(--bg-card);color:var(--text-main);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);transition:.35s;border:1px solid var(--border-glass);display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
+    .card:hover{transform:translateY(-8px);border-color:var(--accent-gold)}
+    .card-img{height:220px;overflow:hidden;background:#1a0508}
+    .card-img img{width:100%;height:100%;object-fit:cover;transition:.7s}.card:hover img{transform:scale(1.08)}
+    .card-body{padding:18px}.card h3{font-size:17px;margin-bottom:6px}.card p{font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .price{display:flex;align-items:center;justify-content:space-between;color:var(--accent-gold);font-weight:900;font-size:16px}
+    .price button{border:0;background:var(--accent-gold);color:#140204;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;transition:0.3s;font-weight:bold;display:flex;align-items:center;justify-content:center}
+    .price button:hover{background:var(--accent-gold-light);transform:scale(1.15)}
+
+    /* Modal نافذة تفاصيل الصنف والإضافات */
+    .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px}
+    .modal-content{background:var(--bg-card);border:1px solid var(--border-glass);border-radius:24px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 25px 60px rgba(0,0,0,0.9)}
+    .modal-img{height:260px;width:100%;position:relative;overflow:hidden}
+    .modal-img img{width:100%;height:100%;object-fit:cover}
+    .close-modal{position:absolute;top:15px;right:15px;background:rgba(0,0,0,0.7);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:1.3rem;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center}
+    .modal-body{padding:25px}
+    .modal-body h2{font-family:'Cinzel',serif;color:var(--accent-gold);font-size:1.7rem;margin-bottom:8px}
+    .modal-body .modal-price{font-size:1.2rem;font-weight:900;color:var(--accent-emerald);margin-bottom:12px}
+    .modal-body p{color:var(--text-muted);font-size:0.9rem;line-height:1.6;margin-bottom:20px}
+    .ingredients-box, .addons-box, .notes-box{margin-bottom:18px;background:var(--bg-deep);border:1px solid var(--border-glass);padding:14px;border-radius:14px}
+    .ingredients-box h4, .addons-box h4, .notes-box h4{color:var(--accent-gold);font-size:0.9rem;margin-bottom:8px}
+    .ingredients-list{display:flex;flex-wrap:wrap;gap:6px}
+    .ingredient-tag{background:rgba(229,193,88,0.1);color:var(--text-main);padding:4px 10px;border-radius:6px;font-size:0.75rem}
+    .addon-option{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border-glass);font-size:0.85rem}
+    .addon-option:last-child{border-bottom:none}
+    .notes-box textarea{width:100%;background:var(--bg-card);border:1px solid var(--border-glass);color:var(--text-main);padding:10px;border-radius:10px;font-family:inherit;resize:none;height:60px;outline:none}
+    .modal-add-btn{width:100%;background:var(--accent-gold);color:#140204;border:none;padding:14px;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;transition:0.3s;margin-top:15px}
+    .modal-add-btn:hover{background:var(--accent-gold-light)}
+
+    .footer{padding:40px 0;border-top:1px solid var(--border-glass);color:var(--text-muted);font-size:12px;background:var(--bg-deep)}
+    .footer-in{display:flex;justify-content:space-between;gap:20px;align-items:center}.footer .logo{color:var(--accent-gold);font-size:22px}
+
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+    .reveal.show{opacity:1;transform:none}
+    @keyframes heroZoom{to{transform:scale(1.1)}} @keyframes bob{50%{transform:translateY(6px)}}
+
+    /* ===== سلة الطلبات والواتساب ===== */
+    .cart-fab{position:fixed;z-index:80;bottom:25px;right:25px;width:60px;height:60px;border:0;border-radius:50%;background:#25D366;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.4);font-size:26px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:0.3s}
+    .cart-fab:hover{transform:scale(1.1)}
+    .cart-fab.show{display:flex}
+    .cart-count{position:absolute;top:-4px;right:-4px;background:#140204;color:var(--accent-gold);border:2px solid #25D366;border-radius:50%;min-width:24px;height:24px;font-size:11px;display:grid;place-items:center;font-weight:900}
+    
+    .cart-panel{position:fixed;z-index:90;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center}
+    .cart-panel.open{display:flex}
+    .cart-box{width:min(580px,100%);max-height:90vh;background:var(--bg-card);color:var(--text-main);border-radius:28px 28px 0 0;padding:25px;overflow:auto;box-shadow:0 -20px 60px rgba(0,0,0,.5);border-top:1px solid var(--border-glass)}
+    .cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.cart-head h3{font-size:22px;color:var(--accent-gold);font-family:"Cinzel",serif}
+    .cart-close{border:0;background:rgba(255,255,255,0.1);color:var(--text-main);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center}
+    .cart-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--border-glass)}
+    .cart-item img{width:60px;height:60px;border-radius:12px;object-fit:cover;flex-shrink:0}
+    .cart-item-info{flex:1}.cart-item-info b{display:block;font-size:14px}.cart-item-info small{color:var(--accent-gold);font-size:11px}
+    .qty{display:flex;align-items:center;gap:10px}.qty button{border:0;width:30px;height:30px;border-radius:50%;background:var(--accent-gold);color:#140204;cursor:pointer;font-weight:bold}
+    
+    .order-form{display:grid;gap:12px;margin-top:15px}
+    .order-form input,.order-form textarea,.order-form select{width:100%;border:1px solid var(--border-glass);border-radius:12px;padding:12px;font:inherit;outline:none;background:var(--bg-deep);color:var(--text-main)}
+    .order-form textarea{min-height:70px;resize:vertical}
+    .checkout-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .checkout-label{font-size:12px;color:var(--accent-gold);font-weight:700;margin-bottom:4px}
+    
+    .cost-row{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;color:var(--text-muted)}
+    .grand-total{border-top:1px solid var(--border-glass);margin-top:8px;padding-top:12px;font-weight:900;font-size:20px;color:var(--accent-gold)}
+    .wa-btn{width:100%;border:0;border-radius:14px;background:#25D366;color:#fff;padding:16px;font-weight:900;cursor:pointer;font-size:16px;transition:0.3s;margin-top:15px}
+    .wa-btn:hover{background:#20ba5a}
+    .empty-cart{text-align:center;padding:40px;color:var(--text-muted)}
+    .clear-btn{border:0;background:transparent;color:#ff5c5c;font-size:13px;cursor:pointer;text-decoration:underline}
+
+    @media(max-width:600px){
+     .navlinks{display:none}.menuBtn{display:block}
+     .products{grid-template-columns:repeat(2,1fr);gap:12px}
+     .card-img{height:150px}.card-body{padding:12px}
+     .checkout-grid{grid-template-columns:1fr}
+    }
+</style>
+</head>
+<body>
+
+<div class="topline"></div>
+
+<nav class="nav" id="nav">
+  <a class="logo" href="#home">DOWN<span>TOWN</span></a>
+  <div class="navlinks">
+    <a href="#story" data-ar="قصتنا" data-en="Our Story">قصتنا</a>
+    <a href="#menu" data-ar="القائمة" data-en="Menu">القائمة</a>
+    <a href="#locations" data-ar="الفروع" data-en="Branches">الفروع</a>
+    <a href="#contact" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
+  </div>
+  <div class="actions">
+    <a class="pill" href="#menu" data-ar="اطلب الآن" data-en="Order now">اطلب الآن</a>
+    <button class="menuBtn" id="menuBtn" aria-label="فتح القائمة">☰</button>
+  </div>
+</nav>
+
+<div class="mobileMenu" id="mobileMenu">
+ <a href="#story">قصتنا</a><a href="#menu">القائمة</a><a href="#locations">الفروع</a><a href="#contact">تواصل معنا</a>
+</div>
+
+<!-- الأزرار العائمة (ترجمة + ليلي/نهاري) -->
+<div class="floating-controls">
+  <button class="float-btn" id="langBtn" title="تغيير اللغة">EN</button>
+  <button class="float-btn" id="themeBtn" title="تبديل الثيم">🌙</button>
+</div>
+
+<main id="home">
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content reveal">
+    <div class="eyebrow"><i></i><span data-ar="تجربة المشاوي والبرجر الفاخر" data-en="Gourmet Grills & Burgers">تجربة المشاوي والبرجر الفاخر</span></div>
+    <h1>DOWN<span>TOWN</span></h1>
+    <p data-ar="أشهى المشاوي على الفحم، البرجر الأنجوس المطهي بحرفية، وأجواء مطاعم الـ 5 نجوم."
+        data-en="Finest charcoal grills, craft Angus burgers, and 5-star restaurant ambiance.">
+       أشهى المشاوي على الفحم، البرجر الأنجوس المطهي بحرفية، وأجواء مطاعم الـ 5 نجوم.
+    </p>
+    <div class="hero-cta">
+      <a class="btn primary" href="#menu" data-ar="اكتشف القائمة" data-en="Explore Menu">اكتشف القائمة</a>
+      <a class="btn secondary" href="#story" data-ar="قصتنا" data-en="Our Story">قصتنا</a>
+    </div>
+    <div class="scrollhint" data-ar="مرر للاكتشاف" data-en="SCROLL DOWN">مرر للاكتشاف</div>
+  </div>
+</section>
+
+<section class="section dark" id="story">
+ <div class="container story">
+  <div class="story-copy reveal">
+    <div class="kicker" data-ar="من نحن" data-en="Who We Are">من نحن</div>
+    <h2 data-ar="فن الطهي الحقيقي<br>في قلب دوان تاون." data-en="True culinary art<br>in the heart of downtown.">فن الطهي الحقيقي<br>في قلب دوان تاون.</h2>
+    <p data-ar="نقدم لك أطباقاً مصممة بعناية فائقة، بدءاً من اللحوم الطازجة المتبلة ببهاراتنا الخاصة وحتى الأجواء الساحرة التي تستحقها."
+       data-en="We serve carefully crafted dishes, from fresh meats marinated with our special spices to the charming ambiance you deserve.">
+       نقدم لك أطباقاً مصممة بعناية فائقة، بدءاً من اللحوم الطازجة المتبلة ببهاراتنا الخاصة وحتى الأجواء الساحرة التي تستحقها.
+    </p>
+    <div class="stats">
+      <div class="stat"><strong>+15</strong><span data-ar="وجبة رئيسية فاخرة" data-en="Gourmet mains">وجبة رئيسية فاخرة</span></div>
+      <div class="stat"><strong>100%</strong><span data-ar="لحوم بلدي وأنجوس" data-en="Pure Angus & local">لحوم بلدي وأنجوس</span></div>
+      <div class="stat"><strong>2 AM</strong><span data-ar="مفتوح حتى الساعات الأخيرة" data-en="Late night service">مفتوح حتى الساعات الأخيرة</span></div>
+    </div>
+  </div>
+  <div class="story-img reveal">
+    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85" alt="Restaurant Interior">
+    <div class="tag" data-ar="جودة بلا كومبروميس" data-en="Uncompromising Quality">جودة بلا كومبروميس</div>
+  </div>
+ </div>
+</section>
+
+<section class="section light" id="menu">
+ <div class="container">
+  <div class="section-head reveal">
+   <div><div class="kicker" data-ar="قائمة الطعام" data-en="Our Menu">قائمة الطعام</div><h2 data-ar="أبرز الأطباق المميزة" data-en="Featured Dishes">أبرز الأطباق المميزة</h2></div>
+   <p data-ar="اضغط على أي صنف لمشاهدة المكونات الكاملة وإضافة ما تحب من الإضافات الفاخرة."
+      data-en="Click any item to view ingredients and add your favorite gourmet options.">اضغط على أي صنف لمشاهدة المكونات الكاملة وإضافة ما تحب من الإضافات الفاخرة.</p>
+  </div>
+  <div class="products" id="productsGrid">
+    <!-- المنتجات سيتم عرضها هنا ديناميكياً مع الإضافات -->
+  </div>
+ </div>
+</section>
+
+<!-- Modal نافذة تفاصيل الصنف والإضافات المخصصة -->
+<div class="modal-overlay" id="productModal" onclick="closeProductModal(event)">
+  <div class="modal-content">
+    <button class="close-modal" onclick="closeModalDirect()">&times;</button>
+    <div class="modal-img"><img id="modalImg" src="" alt="Dish"></div>
+    <div class="modal-body">
+      <h2 id="modalTitle"></h2>
+      <div class="modal-price" id="modalPrice"></div>
+      <p id="modalDesc"></p>
+
+      <div class="ingredients-box">
+        <h4 data-ar="المكونات الأساسية" data-en="Main Ingredients">المكونات الأساسية</h4>
+        <div class="ingredients-list" id="modalIngredients"></div>
+      </div>
+
+      <div class="addons-box">
+        <h4 data-ar="الإضافات الاختيارية (اختر ما تحب)" data-en="Optional Add-ons">الإضافات الاختيارية</h4>
+        <div id="modalAddons"></div>
+      </div>
+
+      <div class="notes-box">
+        <h4 data-ar="ملاحظات خاصة" data-en="Special Instructions">ملاحظات خاصة</h4>
+        <textarea id="modalNotes" placeholder="مثال: بدون بصل، زيادة صوص حار..."></textarea>
+      </div>
+
+      <button class="modal-add-btn" id="modalAddBtn" data-ar="أضف إلى السلة" data-en="Add to Cart">أضف إلى السلة</button>
+    </div>
+  </div>
+</div>
+
+<section class="section dark" id="locations">
+ <div class="container">
+  <div class="section-head reveal">
+   <div><div class="kicker" data-ar="فروعنا" data-en="Branches">فروعنا</div><h2 data-ar="زورنا في أقرب فرع" data-en="Visit Nearest Branch">زورنا في أقرب فرع</h2></div>
+   <p data-ar="نستقبلكم يومياً لتقديم أروع تجربة طعام." data-en="We welcome you daily for the ultimate dining experience.">نستقبلكم يومياً لتقديم أروع تجربة طعام.</p>
+  </div>
+  <div class="locations" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+   <div class="location reveal" style="background:var(--bg-card);border:1px solid var(--border-glass);padding:25px;border-radius:20px;">
+     <h3 style="color:var(--accent-gold);margin-bottom:10px;font-family:'Cinzel';">Downtown Main</h3>
+     <p style="color:var(--text-muted);font-size:13px;line-height:1.7;">المنصورة — شارع الرئيسي<br>مفتوح يومياً: 12 ظهراً — 2 صباحاً</p>
+   </div>
+   <div class="location reveal" style="background:var(--bg-card);border:1px solid var(--border-glass);padding:25px;border-radius:20px;">
+     <h3 style="color:var(--accent-gold);margin-bottom:10px;font-family:'Cinzel';">Downtown Mall</h3>
+     <p style="color:var(--text-muted);font-size:13px;line-height:1.7;">سيتي سنتر — الدور العلوي<br>مفتوح يومياً: 10 صباحاً — 1 صباحاً</p>
+   </div>
+   <div class="location reveal" style="background:var(--bg-card);border:1px solid var(--border-glass);padding:25px;border-radius:20px;">
+     <h3 style="color:var(--accent-gold);margin-bottom:10px;font-family:'Cinzel';">Downtown Corner</h3>
+     <p style="color:var(--text-muted);font-size:13px;line-height:1.7;">منطقة الكورنيش الفاخرة<br>مفتوح يومياً: 1 ظهراً — 3 صباحاً</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section light" id="contact">
+ <div class="container contact" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+  <div class="reveal">
+    <div class="kicker" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</div>
+    <h2 data-ar="جاهز لطلب وجبتك الفاخرة؟" data-en="Ready to order your gourmet meal?">جاهز لطلب وجبتك الفاخرة؟</h2>
+    <p style="color:var(--text-muted);line-height:1.8;margin-top:15px;" data-ar="للحجوزات أو الاستفسارات أو طلبات الدليفري السريعة، تواصل معنا مباشرة." data-en="For reservations, inquiries or fast delivery orders, contact us directly.">للحجوزات أو الاستفسارات أو طلبات الدليفري السريعة، تواصل معنا مباشرة.</p>
+  </div>
+  <div class="contact-card reveal" style="background:var(--bg-card);border:1px solid var(--border-glass);padding:30px;border-radius:24px;">
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-glass)"><span style="color:var(--text-muted)">واتساب / الهاتف</span><strong style="color:var(--accent-gold)"><a href="https://wa.me/201500576313" target="_blank">01500576313</a></strong></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-glass)"><span style="color:var(--text-muted)">Instagram</span><strong>@downtown.restaurant</strong></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0"><span style="color:var(--text-muted)">ساعات العمل</span><strong>12 PM — 02 AM</strong></div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer class="footer">
+ <div class="container footer-in">
+  <div class="logo">DOWN<span>TOWN</span></div>
+  <div>© 2026 DOWNTOWN Restaurant. <span data-ar="جميع الحقوق محفوظة." data-en="All rights reserved.">جميع الحقوق محفوظة.</span></div>
+ </div>
+</footer>
+
+<!-- Floating WhatsApp Cart Button -->
+<button class="cart-fab" id="cartFab" aria-label="سلة الطلبات">
+  🛒<span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- Cart & Checkout Modal Panel -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-box">
+    <div class="cart-head">
+      <h3 data-ar="سلة الطلبات" data-en="Shopping Cart">سلة الطلبات</h3>
+      <button class="cart-close" id="cartClose">&times;</button>
+    </div>
+    <div id="cartItems"></div>
+    
+    <div id="cartSummary" style="display:none; margin-top:15px;">
+      <div class="order-form">
+        <div class="checkout-grid">
+          <div>
+            <div class="checkout-label" data-ar="اسم العميل" data-en="Customer Name">اسم العميل</div>
+            <input type="text" id="customerName" placeholder="اكتب اسمك هنا">
+          </div>
+          <div>
+            <div class="checkout-label" data-ar="رقم الهاتف" data-en="Phone Number">رقم الهاتف</div>
+            <input type="tel" id="customerPhone" placeholder="010xxxxxxxx">
+          </div>
+        </div>
+
+        <div class="checkout-grid">
+          <div>
+            <div class="checkout-label" data-ar="الفرع المطلوب" data-en="Branch">الفرع المطلوب</div>
+            <select id="branchSelect">
+              <option value="Downtown Main">Downtown Main</option>
+              <option value="Downtown Mall">Downtown Mall</option>
+              <option value="Downtown Corner">Downtown Corner</option>
+            </select>
+          </div>
+          <div>
+            <div class="checkout-label" data-ar="نوع الطلب" data-en="Order Type">نوع الطلب</div>
+            <div style="display:flex;gap:15px;padding:10px 0;">
+              <label style="font-size:13px;display:flex;gap:5px;cursor:pointer"><input type="radio" name="deliveryType" id="deliveryTypeDelivery" checked> <span data-ar="توصيل (40 جنيه)" data-en="Delivery">توصيل (40 جنيه)</span></label>
+              <label style="font-size:13px;display:flex;gap:5px;cursor:pointer"><input type="radio" name="deliveryType" id="deliveryTypePickup"> <span data-ar="استلام من الفرع" data-en="Pickup">استلام من الفرع</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="addressWrap">
+          <div class="checkout-label" data-ar="عنوان التوصيل بالتفصيل" data-en="Detailed Address">عنوان التوصيل بالتفصيل</div>
+          <textarea id="customerAddress" placeholder="المنطقة، الشارع، رقم العمارة..."></textarea>
+        </div>
+
+        <div class="checkout-grid">
+          <div>
+            <div class="checkout-label" data-ar="طريقة الدفع" data-en="Payment Method">طريقة الدفع</div>
+            <select id="paymentMethod">
+              <option value="cash" data-ar="كاش عند الاستلام" data-en="Cash on Delivery">كاش عند الاستلام</option>
+              <option value="vodafone" data-ar="فودافون كاش" data-en="Vodafone Cash">فودافون كاش</option>
+            </select>
+          </div>
+          <div>
+            <div class="checkout-label" data-ar="وقت التوصيل" data-en="Delivery Time">وقت التوصيل</div>
+            <input type="text" id="orderTime" placeholder="في أقرب وقت / الساعة كام؟">
+          </div>
+        </div>
+
+        <div>
+          <div class="checkout-label" data-ar="ملاحظات إضافية" data-en="Additional Notes">ملاحظات إضافية</div>
+          <textarea id="orderNotes" placeholder="ملاحظات عامة على الطلب..."></textarea>
+        </div>
+      </div>
+
+      <div style="margin-top:15px; border-top:1px solid var(--border-glass); padding-top:12px;">
+        <div class="cost-row"><span data-ar="المجموع الفرعي:" data-en="Subtotal:">المجموع الفرعي:</span><strong id="subtotal">0 EGP</strong></div>
+        <div class="cost-row" id="deliveryFeeRow"><span data-ar="مصاريف التوصيل:" data-en="Delivery Fee:">مصاريف التوصيل:</span><strong id="deliveryFee">40 EGP</strong></div>
+        <div class="cost-row grand-total"><span data-ar="الإجمالي النهائي:" data-en="Final Total:">الإجمالي النهائي:</span><strong id="cartTotal">0 EGP</strong></div>
+      </div>
+
+      <div style="margin-top:15px;">
+        <button class="wa-btn" id="sendWhatsApp" type="button" data-ar="إرسال الطلب عبر واتساب 📲" data-en="Send Order via WhatsApp 📲">إرسال الطلب عبر واتساب 📲</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+        <button class="clear-btn" id="clearCart" type="button" data-ar="مسح السلة بالكامل" data-en="Clear Cart">مسح السلة بالكامل</button>
+        <span style="font-size:11px;color:var(--text-muted)">واتساب: 01500576313</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// قائمة المنتجات مع الإضافات والمكونات الكاملة
+const productsData = [
+  {
+    id: 1,
+    nameAr: "مشاوي داون تاون المشكلة",
+    nameEn: "Downtown Mixed Grills",
+    price: 350,
+    descAr: "تشكيلة فاخرة من الكفتة، الشيش طاووق، والريش المشوية على الفحم الحقيقي.",
+    descEn: "Luxury assortment of charcoal-grilled kofta, shish tawook, and chops.",
+    img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&auto=format&fit=crop&q=80",
+    ingredientsAr: ["كفتة ضاني", "شيش طاووق", "ريش مشوية", "بهارات شرقية", "خبز متبل"],
+    ingredientsEn: ["Lamb Kofta", "Shish Tawook", "Grilled Chops", "Oriental Spices"],
+    addons: [
+      { nameAr: "طحينة زيادة", nameEn: "Extra Tahini", price: 15 },
+      { nameAr: "ثومية فاخرة", nameEn: "Extra Garlic Dip", price: 15 },
+      { nameAr: "بطاطس محمرة", nameEn: "French Fries", price: 35 }
+    ]
+  },
+  {
+    id: 2,
+    nameAr: "ترفل برجر ديلوكس",
+    nameEn: "Truffle Burger Deluxe",
+    price: 210,
+    descAr: "قطعة لحم أنجوس مع صوص الترفل الفاخر والجبنة الشيدر المذابة في خبز بريوش.",
+    descEn: "Angus beef patty with luxury truffle sauce and melted cheddar.",
+    img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80",
+    ingredientsAr: ["لحم أنجوس", "صوص ترفل", "جبنة شيدر", "خبز بريوش طازج"],
+    ingredientsEn: ["Angus Beef", "Truffle Sauce", "Cheddar", "Brioche Bun"],
+    addons: [
+      { nameAr: "جبنة شيدر مضاعفة", nameEn: "Extra Cheddar", price: 25 },
+      { nameAr: "شرائح بيف بيكون", nameEn: "Beef Bacon", price: 30 },
+      { nameAr: "هالبينو حار", nameEn: "Jalapeno", price: 15 }
+    ]
+  },
+  {
+    id: 3,
+    nameAr: "بيتزا مارجريتا بالحطب",
+    nameEn: "Wood-Fired Margherita",
+    price: 180,
+    descAr: "عجينة إيطالية مخمرة ببطء، صلصة طماطم سان مارزانو وجبنة موزاريلا طازجة.",
+    descEn: "Slow-fermented Italian dough, San Marzano tomatoes, and fresh mozzarella.",
+    img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600&auto=format&fit=crop&q=80",
+    ingredientsAr: ["موزاريلا طازجة", "ريحان", "طماطم سان مارزانو", "زيت زيتون"],
+    ingredientsEn: ["Fresh Mozzarella", "Basil", "San Marzano Tomatoes", "Olive Oil"],
+    addons: [
+      { nameAr: "موزاريلا إضافية", nameEn: "Extra Mozzarella", price: 30 },
+      { nameAr: "بيبروني فاخر", nameEn: "Pepperoni", price: 35 },
+      { nameAr: "مشروم طازج", nameEn: "Fresh Mushrooms", price: 20 }
+    ]
+  },
+  {
+    id: 4,
+    nameAr: "فيتوتشيني ألفريدو بالكريمة",
+    nameEn: "Creamy Fettuccine Alfredo",
+    price: 195,
+    descAr: "مكرونة فيتوتشيني مع قطع الدجاج المشوي، كريمة غنية وجبنة بارميزان معتقة.",
+    descEn: "Fettuccine pasta with grilled chicken, rich cream, and aged parmesan.",
+    img: "https://images.unsplash.com/photo-1645112411341-6c4fd0237146?w=600&auto=format&fit=crop&q=80",
+    ingredientsAr: ["فيتوتشيني", "دجاج مشوي", "كريمة ثقيلة", "جبنة بارميزان"],
+    ingredientsEn: ["Fettuccine", "Grilled Chicken", "Heavy Cream", "Parmesan"],
+    addons: [
+      { nameAr: "مشروم إضافي", nameEn: "Extra Mushrooms", price: 20 },
+      { nameAr: "بارميزان زيادة", nameEn: "Extra Parmesan", price: 25 }
+    ]
+  }
+];
+
+// السكريبت الرئيسي ونظام السلة المحدث
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+
+const observer=new IntersectionObserver((entries)=>{
+ entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+let lang='ar';
+const langBtn=document.getElementById('langBtn');
+function setLang(next){
+ lang=next;
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+ document.querySelectorAll('[data-ar]').forEach(el=>{
+   const text = el.dataset[lang];
+   if(text) el.innerHTML = text;
+ });
+ langBtn.textContent=lang==='ar'?'EN':'AR';
+ renderProducts();
+}
+langBtn.addEventListener('click',()=>setLang(lang==='ar'?'en':'ar'));
+
+let currentTheme='dark';
+const themeBtn=document.getElementById('themeBtn');
+themeBtn.addEventListener('click',()=>{
+ currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+ document.getElementById('htmlRoot').setAttribute('data-theme', currentTheme);
+ themeBtn.textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+});
+
+const menuBtn=document.getElementById('menuBtn'), mobileMenu=document.getElementById('mobileMenu');
+menuBtn.addEventListener('click',()=>mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobileMenu.classList.remove('open')));
+
+// رندر المنتجات
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  productsData.forEach(item => {
+    const name = lang === 'ar' ? item.nameAr : item.nameEn;
+    const desc = lang === 'ar' ? item.descAr : item.descEn;
+    grid.innerHTML += `
+      <article class="card reveal" onclick="openProductModal(${item.id})">
+        <div class="card-img"><img src="${item.img}" alt="${name}"></div>
+        <div class="card-body">
+          <h3>${name}</h3>
+          <p>${desc}</p>
+          <div class="price">
+            <span>${item.price} EGP</span>
+            <button class="add-btn" onclick="event.stopPropagation(); openProductModal(${item.id})">+</button>
+          </div>
+        </div>
+      </article>
+    `;
+  });
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+}
+
+let activeProduct = null;
+function openProductModal(id) {
+  activeProduct = productsData.find(p => p.id === id);
+  document.getElementById('modalImg').src = activeProduct.img;
+  document.getElementById('modalTitle').textContent = lang === 'ar' ? activeProduct.nameAr : activeProduct.nameEn;
+  document.getElementById('modalPrice').textContent = activeProduct.price + " EGP";
+  document.getElementById('modalDesc').textContent = lang === 'ar' ? activeProduct.descAr : activeProduct.descEn;
+  document.getElementById('modalNotes').value = '';
+
+  const ingContainer = document.getElementById('modalIngredients');
+  ingContainer.innerHTML = '';
+  const ings = lang === 'ar' ? activeProduct.ingredientsAr : activeProduct.ingredientsEn;
+  ings.forEach(ing => {
+    ingContainer.innerHTML += `<span class="ingredient-tag">${ing}</span>`;
+  });
+
+  const addonsContainer = document.getElementById('modalAddons');
+  addonsContainer.innerHTML = '';
+  if(activeProduct.addons && activeProduct.addons.length > 0) {
+    activeProduct.addons.forEach((addon, index) => {
+      const addonName = lang === 'ar' ? addon.nameAr : addon.nameEn;
+      addonsContainer.innerHTML += `
+        <div class="addon-option">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" class="addon-checkbox" data-name="${addonName}" data-price="${addon.price}">
+            ${addonName}
+          </label>
+          <span style="color:var(--accent-gold)">+${addon.price} EGP</span>
+        </div>
+      `;
+    });
+  } else {
+    addonsContainer.innerHTML = `<span style="font-size:12px;color:var(--text-muted)">لا توجد إضافات متاحة</span>`;
+  }
+
+  document.getElementById('productModal').style.display = 'flex';
+}
+
+function closeModalDirect() {
+  document.getElementById('productModal').style.display = 'none';
+}
+function closeProductModal(e) {
+  if(e.target.id === 'productModal') closeModalDirect();
+}
+
+document.getElementById('modalAddBtn').addEventListener('click', () => {
+  if(!activeProduct) return;
+  let finalPrice = activeProduct.price;
+  let selectedAddons = [];
+  
+  document.querySelectorAll('.addon-checkbox:checked').forEach(cb => {
+    finalPrice += Number(cb.dataset.price);
+    selectedAddons.push(cb.dataset.name);
+  });
+
+  const notes = document.getElementById('modalNotes').value.trim();
+  const name = lang === 'ar' ? activeProduct.nameAr : activeProduct.nameEn;
+  const key = `${activeProduct.id}-${selectedAddons.join('-')}-${notes}`;
+
+  if(cart[key]) {
+    cart[key].qty += 1;
+  } else {
+    cart[key] = {
+      key,
+      name,
+      price: finalPrice,
+      image: activeProduct.img,
+      addons: selectedAddons,
+      notes,
+      qty: 1
+    };
+  }
+
+  renderCart();
+  closeModalDirect();
+});
+
+// سلة الطلبات والواتساب
+const WHATSAPP_NUMBER = '201500576313';
+const DELIVERY_FEE = 40;
+let cart = JSON.parse(localStorage.getItem('downtownCart') || '{}');
+
+const cartFab = document.getElementById('cartFab');
+const cartPanel = document.getElementById('cartPanel');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+const cartSummary = document.getElementById('cartSummary');
+
+const subtotalEl = document.getElementById('subtotal');
+const deliveryFeeEl = document.getElementById('deliveryFee');
+const cartTotal = document.getElementById('cartTotal');
+const deliveryRadio = document.getElementById('deliveryTypeDelivery');
+const addressWrap = document.getElementById('addressWrap');
+
+function money(val) { return Number(val).toLocaleString('en-US') + ' EGP'; }
+function saveCart() { localStorage.setItem('downtownCart', JSON.stringify(cart)); }
+function getItems() { return Object.values(cart); }
+function getSubtotal() { return getItems().reduce((sum, item) => sum + (item.price * item.qty), 0); }
+function getDelivery() { return deliveryRadio && deliveryRadio.checked ? DELIVERY_FEE : 0; }
+
+function renderCart() {
+  const items = getItems();
+  const count = items.reduce((sum, item) => sum + item.qty, 0);
+  if(cartCount) cartCount.textContent = count;
+  if(cartFab) cartFab.classList.toggle('show', count > 0);
+  saveCart();
+
+  if(!items.length) {
+    if(cartItems) {
+      cartItems.innerHTML = `
+        <div class="empty-cart">
+          <div style="font-size:40px;margin-bottom:10px">🛒</div>
+          <strong style="font-size:16px;color:var(--accent-gold)">السلة فارغة</strong>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:5px">اختار وجبتك الفاخرة وابدأ طلبك الآن</p>
+        </div>
+      `;
+    }
+    if(cartSummary) cartSummary.style.display = 'none';
+    return;
+  }
+
+  if(cartSummary) cartSummary.style.display = 'block';
+  if(cartItems) {
+    cartItems.innerHTML = items.map(item => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}">
+        <div class="cart-item-info">
+          <b>${item.name}</b>
+          ${item.addons.length ? `<small>+ ${item.addons.join(', ')}</small>` : ''}
+          ${item.notes ? `<small style="color:#ff5c5c">📝 ${item.notes}</small>` : ''}
+          <strong style="color:var(--accent-gold);font-size:12px">${money(item.price)} × ${item.qty}</strong>
+        </div>
+        <div class="qty">
+          <button type="button" onclick="changeQty('${item.key}', -1)">−</button>
+          <b>${item.qty}</b>
+          <button type="button" onclick="changeQty('${item.key}', 1)">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  updateTotals();
+}
+
+function updateTotals() {
+  const sub = getSubtotal();
+  const del = getDelivery();
+  const total = sub + del;
+  if(subtotalEl) subtotalEl.textContent = money(sub);
+  if(deliveryFeeEl) deliveryFeeEl.textContent = del ? money(del) : 'مجاني / Free';
+  if(cartTotal) cartTotal.textContent = money(total);
+  if(addressWrap) addressWrap.style.display = deliveryRadio.checked ? 'block' : 'none';
+}
+
+function changeQty(key, amt) {
+  if(!cart[key]) return;
+  cart[key].qty += amt;
+  if(cart[key].qty <= 0) delete cart[key];
+  renderCart();
+}
+window.changeQty = changeQty;
+
+if(cartFab) cartFab.addEventListener('click', () => cartPanel.classList.add('open'));
+document.getElementById('cartClose').addEventListener('click', () => cartPanel.classList.remove('open'));
+cartPanel.addEventListener('click', e => { if(e.target === cartPanel) cartPanel.classList.remove('open'); });
+
+if(deliveryRadio) deliveryRadio.addEventListener('change', updateTotals);
+document.getElementById('deliveryTypePickup').addEventListener('change', updateTotals);
+
+document.getElementById('clearCart').addEventListener('click', () => {
+  if(confirm('هل تريد مسح السلة؟')) {
+    cart = {};
+    saveCart();
+    renderCart();
+  }
+});
+
+document.getElementById('sendWhatsApp').addEventListener('click', () => {
+  const items = getItems();
+  if(!items.length) return;
+  const name = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  const branch = document.getElementById('branchSelect').value;
+  const type = deliveryRadio.checked ? 'delivery' : 'pickup';
+  const payment = document.getElementById('paymentMethod').value;
+  const time = document.getElementById('orderTime').value.trim() || 'في أقرب وقت';
+  const notes = document.getElementById('orderNotes').value.trim();
+
+  if(!name || !phone) {
+    alert('من فضلك أدخل الاسم ورقم الهاتف.');
+    return;
+  }
+  if(type === 'delivery' && !address) {
+    alert('من فضلك أدخل عنوان التوصيل بالتفصيل.');
+    return;
+  }
+
+  const orderNum = 'DT-' + Date.now().toString().slice(-7);
+  let msg = `🔥 *طلب جديد من مطعم DOWNTOWN* 🔥\n\n`;
+  msg += `🆔 *رقم الطلب:* ${orderNum}\n`;
+  msg += `👤 *الاسم:* ${name}\n`;
+  msg += `📞 *الهاتف:* ${phone}\n`;
+  msg += `🏬 *الفرع:* ${branch}\n`;
+  msg += `📦 *النوع:* ${type === 'delivery' ? 'توصيل دليفري 🛵' : 'استلام من الفرع 🛍️'}\n`;
+  if(type === 'delivery') msg += `📍 *العنوان:* ${address}\n`;
+  msg += `💳 *الدفع:* ${payment === 'cash' ? 'كاش عند الاستلام' : 'فودافون كاش'}\n`;
+  msg += `⏰ *الوقت:* ${time}\n`;
+  if(notes) msg += `📝 *ملاحظات عامة:* ${notes}\n`;
+  msg += `━━━━━━━━━━━━━━━━━━\n\n*الأصناف المطلوبة:*\n`;
+
+  let sub = 0;
+  items.forEach((item, index) => {
+    msg += `${index + 1}. *${item.name}* × ${item.qty} — *${item.price * item.qty} EGP*\n`;
+    if(item.addons.length) msg + `   ➕ الإضافات: ${item.addons.join(', ')}\n`;
+    if(item.notes) msg + `   📝 ملاحظة: ${item.notes}\n`;
+    sub += item.price * item.qty;
+  });
+
+  const del = type === 'delivery' ? DELIVERY_FEE : 0;
+  msg += `\n━━━━━━━━━━━━━━━━━━\n`;
+  msg += `🛍️ المجموع الفرعي: ${money(sub)}\n`;
+  if(type === 'delivery') msg += `🛵 التوصيل: ${money(DELIVERY_FEE)}\n`;
+  msg += `💰 *الإجمالي النهائي: ${money(sub + del)}*\n\n`;
+  msg += `شكراً لاختياركم DOWNTOWN! 🌟`;
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=` + encodeURIComponent(msg), '_blank');
+  cart = {};
+  saveCart();
+  renderCart();
+  cartPanel.classList.remove('open');
+});
+
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
